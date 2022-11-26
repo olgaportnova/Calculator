@@ -6,16 +6,18 @@ public class Main {
     public static String price;
 
     public static void main(String[] args) {
-
+        Scanner scanner = new Scanner(System.in);
             System.out.println ("На скольких человек необходимо разделить счет?");
             int x;
             while (true) {
-            Scanner scanner0 = new Scanner(System.in);
-                if (scanner0.hasNextInt()) {
-                    x = scanner0.nextInt();
+
+                if (scanner.hasNextInt()) {
+                    x = scanner.nextInt();
+                    scanner.nextLine();
                 }
                 else {
                     System.out.println("Введите число!");
+                    scanner.nextLine();
                     continue;
                 }
                 if (x == 1) {
@@ -34,43 +36,41 @@ public class Main {
         Calculator calculator1 = new Calculator(0, "");
         while (true) {
             System.out.println("Введите название товара.");
-            Scanner scanner = new Scanner(System.in);
-            String itemName;
-            itemName = scanner.next();
+            String itemName = scanner.next();
+            scanner.nextLine();
             double itemPrice=0d;
             while (true){
-            System.out.println("Введите цену товара в формате 'рубли.копейки' [10.45, 11.40].");
-            Scanner scanner2 = new Scanner(System.in);
-
-            //itemPrice = scanner2.nextFloat();
-            if (scanner2.hasNextDouble()) {
-                    itemPrice = scanner2.nextDouble();
+                System.out.println("Введите цену товара в формате 'рубли.копейки' [10.45, 11.40].");
+                if (scanner.hasNextDouble()) {
+                    itemPrice = scanner.nextDouble();
+                    scanner.nextLine();
                     if (itemPrice>=0){
                         break;
                     }
 
                 }
+                else {
+                    scanner.nextLine();
+                    continue;
+
+                }
+
 
             }
             Item item = new Item(itemName, itemPrice);
             calculator1.sum(item);
             System.out.println("Товар добавлен в корзину. Если хотите завершить - напишите 'завершить', если продолжить - любой символ.");
-            Scanner scanner1 = new Scanner(System.in);
-            String end = scanner1.next();
+            String end = scanner.next();
             end=end.toLowerCase();
-//            System.out.println(end);
-            if (Objects.equals(end, "завершить")){
-//                System.out.println("Все товары добавлены.");
-//                System.out.println(calculator1.calculatorSumm);
-//                System.out.println(calculator1.calculatorItemList);
+            if (end.equalsIgnoreCase("завершить")) {
                 break;
             }
         }
         double pricePerPerson = calculator1.calculatorSumm / x;
         String pricePerPersonToShow = String.format("%.2f", pricePerPerson);
         Rubles pron = new Rubles (pricePerPerson);
-        pron.rubles(pricePerPerson);
-        String pronanc=Rubles.price;
+
+        String pronanc=pron.rubles(pricePerPerson);
         System.out.println( "Все добавленные товары:" +  calculator1.calculatorItemList);
         System.out.println("Каждый человек должен заплатить: " + pricePerPersonToShow + " " + pronanc);
 

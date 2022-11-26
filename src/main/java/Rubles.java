@@ -1,26 +1,33 @@
 public class Rubles {
-    public static String price;
+    public String price;
     double pricePerPerson;
 
-    public Rubles (double amount){
-        pricePerPerson=amount;
+    public Rubles(double amount) {
+        pricePerPerson = amount;
+
     }
+
     public String rubles(Double pricePerPerson) {
-        int preLastDigit = (int) (pricePerPerson % 100 / 10);
-        if (preLastDigit==1) {
-            price ="рублей";
+        int twoLastDigit = (int) (pricePerPerson % 100);
+        if ((twoLastDigit >= 11) && (twoLastDigit <= 14)) {
+            price = "рублей";
+            return price;
         }
-        switch (preLastDigit % 10) {
+
+        int LastDigit = twoLastDigit % 10;
+        switch (LastDigit) {
             case 1:
-                price="рубль";
+                price = "рубль";
+                break;
             case 2:
             case 3:
             case 4:
                 price = "рубля";
+                break;
             default:
                 price = "рублей";
         }
         return price;
-    }
 
+    }
 }
